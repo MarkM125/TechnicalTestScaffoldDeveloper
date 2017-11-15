@@ -116,53 +116,27 @@ namespace TechnicalTestScaffoldDeveloper
 
         public static int CountCombinationsWhichAdd(List<int> cards, int goalValue)
         {
-            return CountCombinationsWhichAdd(0, cards.ToList(), goalValue, true);
+            return CountCombinationsWhichAdd(0, cards.ToList(), goalValue,0);
         }
 
-        public static int CountCombinationsWhichAdd(int runningScore, List<int> cards, int requiredTotal, bool secondaryLopp)
+        public static int CountCombinationsWhichAdd(int runningScore, List<int> cards, int requiredTotal, int runningTotal)
         {
-            List<int> remainingCards = new List<int>();
-
-            for (int i = 1;i < cards.Count();i++)
+            if (cards.Count().Equals(0))
             {
-                Console.WriteLine($"i = {i}, runningScore = {runningScore}, requiredTotal = {requiredTotal}, cards = {ListToString(cards)}");
-                int sum = cards[0] + cards[i];
-                if (sum.Equals(requiredTotal))
+                //Console.WriteLine($"Sum is: {runningTotal}");
+                if (runningTotal.Equals(requiredTotal))
                 {
                     runningScore++;
                 }
-                remainingCards = new List<int>(cards.GetRange(i, cards.Count() - i));
-                if (secondaryLopp && sum < requiredTotal)
-                {
-                    runningScore = CountCombinationsWhichAdd(runningScore, remainingCards, requiredTotal - cards[0], true);
-                }
             }
-            if (cards.Count() > 2)
+            else
             {
-                remainingCards = new List<int>(cards.GetRange(1, cards.Count() - 1));
-                runningScore = CountCombinationsWhichAdd(runningScore, remainingCards, requiredTotal, false);
-
+                runningScore = CountCombinationsWhichAdd(runningScore, new List<int>(cards.GetRange(1, cards.Count() - 1)), requiredTotal, runningTotal + cards[0]);
+                runningScore = CountCombinationsWhichAdd(runningScore, new List<int>(cards.GetRange(1, cards.Count() - 1)), requiredTotal, runningTotal);
             }
             return runningScore;
         }
 
-        //Method used for debugging!
-        public static string ListToString(List<int> input)
-        {
-            string output = "";
-            foreach(int value in input)
-            {
-                if (output.Length.Equals(0))
-                {
-                    output = value.ToString();
-                }
-                else
-                {
-                    output = $"{output}, {value.ToString()}";
-                }
-            }
-            return output;
-        }
 
         private static void OutputScore(int score)
         {
