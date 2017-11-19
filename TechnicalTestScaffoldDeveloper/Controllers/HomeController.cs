@@ -40,6 +40,16 @@ namespace TechnicalTestScaffoldDeveloper.Controllers
             }
         }
 
+        public IActionResult FindZeroScore()
+        {
+            return View("CardList",Score.FindScore());
+        }
+
+        public IActionResult CountScoresThatEqualValues()
+        {
+            return View("NumberOfCardSets", Score.CountSumsThatEqualValues());
+        }
+
         public IActionResult Error()
         {
             return View();

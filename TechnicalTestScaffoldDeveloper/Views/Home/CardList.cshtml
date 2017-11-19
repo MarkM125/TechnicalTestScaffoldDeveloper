@@ -1,0 +1,19 @@
+﻿@model List<int>
+@{
+    ViewData["Title"] = "Cheats";
+}
+
+<br>
+<p>Cards are:</p>
+<div class="row">
+    @foreach (int item in Model)
+    {
+    <div class="col-md-1">
+        <h2>
+            @item
+        </h2>
+    </div>
+    }
+</div>
+
+@Html.ActionLink("Do you want to play?", "Index", "Home")

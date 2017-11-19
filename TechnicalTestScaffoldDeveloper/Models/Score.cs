@@ -85,12 +85,12 @@ namespace TechnicalTestScaffoldDeveloper.Models
             return runningScore;
         }
 
-        public static int CountCombinationsWhichAdd(List<int> cards, int goalValue)
+        public static int CountCombinationsWhichAdd(List<int> cards, int goalValue, bool forceUseAllCards = false)
         {
-            return CountCombinationsWhichAdd(0, cards.ToList(), goalValue, 0);
+            return CountCombinationsWhichAdd(0, cards.ToList(), goalValue, 0, forceUseAllCards);
         }
 
-        public static int CountCombinationsWhichAdd(int runningScore, List<int> cards, int requiredTotal, int runningTotal)
+        public static int CountCombinationsWhichAdd(int runningScore, List<int> cards, int requiredTotal, int runningTotal, bool forceUseAllCards)
         {
             if (cards.Count().Equals(0))
             {
@@ -102,10 +102,85 @@ namespace TechnicalTestScaffoldDeveloper.Models
             }
             else
             {
-                runningScore = CountCombinationsWhichAdd(runningScore, new List<int>(cards.GetRange(1, cards.Count() - 1)), requiredTotal, runningTotal + cards[0]);
-                runningScore = CountCombinationsWhichAdd(runningScore, new List<int>(cards.GetRange(1, cards.Count() - 1)), requiredTotal, runningTotal);
+                runningScore = CountCombinationsWhichAdd(runningScore, new List<int>(cards.GetRange(1, cards.Count() - 1)), requiredTotal, runningTotal + cards[0], forceUseAllCards);
+                if (!forceUseAllCards)
+                {
+                    runningScore = CountCombinationsWhichAdd(runningScore, new List<int>(cards.GetRange(1, cards.Count() - 1)), requiredTotal, runningTotal, forceUseAllCards);
+                }
             }
             return runningScore;
+        }
+
+        // Quick methods for calculating stats with cards, should probably be done by direct recursion (but hey, it's Sunday)
+        public static int CountSumsThatEqualValues(int requiredScore = 15)
+        {
+            List<int> cards = new List<int>();
+            int countScoreHits = 0;
+            for (int count1 = 1; count1 < 11; count1++)
+            {
+                for (int count2 = 1; count2 <= count1; count2++)
+                {
+                    for (int count3 = 1; count3 <= count2; count3++)
+                    {
+                        for (int count4 = 1; count4 <= count3; count4++)
+                        {
+                            for (int count5 = 1; count5 <= count4; count5++)
+                            {
+                                cards = new List<int>() { count1, count2, count3, count4, count5 };
+                                if (CountCombinationsWhichAdd(cards, requiredScore,true) > 0)
+                                {
+                                    countScoreHits++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return countScoreHits;
+        }
+
+        public static List<int> FindScore(int requiredScore = 0)
+        {
+            Score score = new Score();
+            List<int> cards = new List<int>();
+            for (int count1 = 1; count1 < 11; count1++)
+            {
+                for (int count2 = 1; count2 < 11; count2++)
+                {
+                    for (int count3 = 1; count3 < 11; count3++)
+                    {
+                        for (int count4 = 1; count4 < 11; count4++)
+                        {
+                            for (int count5 = 1; count5 < 11; count5++)
+                            {
+                                cards = new List<int>() { count1, count2, count3, count4, count5 };
+                                score = CalculateScore(cards);
+                                if(score.Valid && score.Value.Equals(requiredScore))
+                                {
+                                    break;
+                                }
+                            }
+                            if (score.Valid && score.Value.Equals(requiredScore))
+                            {
+                                break;
+                            }
+                        }
+                        if (score.Valid && score.Value.Equals(requiredScore))
+                        {
+                            break;
+                        }
+                    }
+                    if (score.Valid && score.Value.Equals(requiredScore))
+                    {
+                        break;
+                    }
+                }
+                if (score.Valid && score.Value.Equals(requiredScore))
+                {
+                    break;
+                }
+            }
+            return cards;
         }
 
         // Old methods from non-ASP.net project
