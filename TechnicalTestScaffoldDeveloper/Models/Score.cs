@@ -19,10 +19,11 @@ namespace TechnicalTestScaffoldDeveloper.Models
         {
             // Hopefully this won't return 0 for long....
             Score results = new Score();
+            bool validity;
             if (CheckCardRange(cards))
             {
-                int scoreFromMatching = CountMatching(cards.ToList());
-                if (scoreFromMatching > 4)
+                int scoreFromMatching = CountMatching(cards.ToList(), out validity);
+                if (!validity)
                 {
                     results.Valid = false;
                     results.ErrorType = "Duplicate cards";
@@ -71,15 +72,37 @@ namespace TechnicalTestScaffoldDeveloper.Models
             }
         }
 
-        public static int CountMatching(List<int> cards)
+        public static int CountMatching(List<int> cards, out bool validity)
         {
+            validity = true;
             int runningScore = 0;
+            int singleCardPairCount;
+            List<int> checkedCars = new List<int>();
+            bool firstMatch;
             for (int i = 0; i < cards.Count(); i++)
             {
-                for (int j = i + 1; j < cards.Count(); j++)
+                singleCardPairCount = 0;
+                firstMatch = true;
+                if (!checkedCars.Contains(cards[i]))
                 {
-                    if (cards[i].Equals(cards[j]))
-                        runningScore++;
+                    for (int j = i + 1; j < cards.Count(); j++)
+                    {
+                        if (cards[i].Equals(cards[j]))
+                        {
+                            runningScore++;
+                            singleCardPairCount++;
+                            checkedCars.Add(cards[i]);
+                            if (firstMatch)
+                            {
+                                runningScore++;
+                                firstMatch = false;
+                            }
+                            else if (singleCardPairCount > 3)
+                            {
+                                validity = false;
+                            }
+                        }
+                    }
                 }
             }
             return runningScore;

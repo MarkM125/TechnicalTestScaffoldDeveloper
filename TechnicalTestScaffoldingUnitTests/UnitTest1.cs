@@ -31,7 +31,7 @@ namespace TechnicalTestScaffoldingUnitTests
             [TestMethod]
             public void CheckScore_Run3()
             {
-                Assert.AreEqual(10, Score.CalculateScore(new List<int>() { 7, 7, 7, 8, 8 }).Value);
+                Assert.AreEqual(11, Score.CalculateScore(new List<int>() { 7, 7, 7, 8, 8 }).Value);
             }
 
             [TestMethod]
@@ -45,9 +45,21 @@ namespace TechnicalTestScaffoldingUnitTests
             [TestMethod]
             public void Test_CountMatching()
             {
-                Assert.AreEqual(3, Score.CountMatching(new List<int>() { 3, 3, 3, 2, 10 }));
-                Assert.AreEqual(0, Score.CountMatching(new List<int>() { 10, 5, 2, 3 }));
-                Assert.AreEqual(3, Score.CountMatching(new List<int>() { 8, 8, 8 }));
+                bool validity;
+                Assert.AreEqual(3, Score.CountMatching(new List<int>() { 3, 3, 3, 2, 10 }, out validity));
+                Assert.IsTrue(validity);
+                Assert.AreEqual(0, Score.CountMatching(new List<int>() { 10, 5, 2, 3 }, out validity));
+                Assert.IsTrue(validity);
+                Assert.AreEqual(3, Score.CountMatching(new List<int>() { 8, 8, 8 }, out validity));
+                Assert.IsTrue(validity);
+                Assert.AreEqual(2, Score.CountMatching(new List<int>() { 8, 8 }, out validity));
+                Assert.IsTrue(validity);
+                Assert.AreEqual(4, Score.CountMatching(new List<int>() { 8, 8, 8, 8 }, out validity));
+                Assert.IsTrue(validity);
+                Assert.AreEqual(5, Score.CountMatching(new List<int>() { 8, 8, 8, 8, 8 }, out validity));
+                Assert.IsFalse(validity);
+                Assert.AreEqual(5, Score.CountMatching(new List<int>() { 7, 7, 7, 8, 8 }, out validity));
+                Assert.IsTrue(validity);
             }
         }
     }
