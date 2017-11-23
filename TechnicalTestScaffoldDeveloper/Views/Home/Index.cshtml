@@ -6,63 +6,21 @@
 <h3>Choose your @Model.CardNumberRequired card</h3>
 
 <div class="row">
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("1", "Index", "Home", new { data = 1 }, null)
-        </h2>
-    </div>
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("2", "Index", "Home", new { data = 2 }, null)
-        </h2>
-    </div>
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("3", "Index", "Home", new { data = 3 }, null)
-        </h2>
-    </div>
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("4", "Index", "Home", new { data = 4 }, null)
-        </h2>
-    </div>
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("5", "Index", "Home", new { data = 5 }, null)
-        </h2>
-    </div>
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("6", "Index", "Home", new { data = 6 }, null)
-        </h2>
-    </div>
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("7", "Index", "Home", new { data = 7 }, null)
-        </h2>
-    </div>
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("8", "Index", "Home", new { data = 8 }, null)
-        </h2>
-    </div>
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("9", "Index", "Home", new { data = 9 }, null)
-        </h2>
-    </div>
-    <div class="col-md-1">
-        <h2>
-            @Html.ActionLink("10", "Index", "Home", new { data = 10 }, null)
-        </h2>
-    </div>
+    @foreach (var card in Model.CardButtons)
+    {
+        <div class="col-md-1">
+            <h2>
+                @Html.ActionLink(card.ToString(), "Index", "Home", new { data = card }, null)
+            </h2>
+        </div>
+    }
 </div>
 <br>
 <p>
     Rules:
     <ul>
         <li>Choose 5 cards</li>
-        <li>Each combination of cards within your set that add to 15 will earn an extra point</li>
+        <li>Each combination of cards within your set that add to 15 will earn a extra point</li>
         <li>Pairs, triples and quadruples earn extra 2, 3 and 4 points repectively</li>
     </ul>
 </p>

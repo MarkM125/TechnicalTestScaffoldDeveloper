@@ -18,6 +18,7 @@ namespace TechnicalTestScaffoldDeveloper.Models
     //}
     public class CardsModel
     {
+        public List<int> CardButtons {get; }
         public List<int> Cards { get; set; }
         public int Count { get; set; }
         public string CardNumberRequired { get; set; }
@@ -26,6 +27,7 @@ namespace TechnicalTestScaffoldDeveloper.Models
             this.CardNumberRequired = "first";
             this.Count = 0;
             this.Cards = new List<int>();
+            this.CardButtons = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         }
 
         public static Models.CardsModel AddCard(Models.CardsModel data, int card)
