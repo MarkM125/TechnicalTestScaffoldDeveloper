@@ -25,7 +25,7 @@ namespace TechnicalTestScaffoldDeveloper.Controllers
                     return View(Cards);
                 case 6:
                     Cards = CardsModel.AddCard(Cards, data);
-                    Score Results = Score.CalculateScore(Cards.Cards);
+                    ScoreModel Results = ScoreModel.CalculateScore(Cards.Cards);
                     if (Results.Valid)
                     {
                         return View("Results", Results);
@@ -42,12 +42,12 @@ namespace TechnicalTestScaffoldDeveloper.Controllers
 
         public IActionResult FindZeroScore()
         {
-            return View("CardList",Score.FindScore());
+            return View("CardList",ScoreModel.FindScore());
         }
 
         public IActionResult CountScoresThatEqualValues()
         {
-            return View("NumberOfCardSets", Score.CountSumsThatEqualValues());
+            return View("NumberOfCardSets", ScoreModel.CountSumsThatEqualValues());
         }
 
         public IActionResult Error()

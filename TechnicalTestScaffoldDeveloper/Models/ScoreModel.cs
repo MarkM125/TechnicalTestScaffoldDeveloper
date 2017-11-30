@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace TechnicalTestScaffoldDeveloper.Models
 {
-    public class Score
+    public class ScoreModel
     {
         public int Value { get; set; }
         public bool Valid { get; set; }
         public string ErrorType { get; set; }
-        public Score()
+        public ScoreModel()
         {
             this.Valid = true;
         }
 
-        public static Score CalculateScore(List<int> cards)
+        public static ScoreModel CalculateScore(List<int> cards)
         {
             // Hopefully this won't return 0 for long....
-            Score results = new Score();
+            ScoreModel results = new ScoreModel();
             bool validity;
             if (CheckCardRange(cards))
             {
@@ -164,7 +164,7 @@ namespace TechnicalTestScaffoldDeveloper.Models
 
         public static List<int> FindScore(int requiredScore = 0)
         {
-            Score score = new Score();
+            ScoreModel score = new ScoreModel();
             List<int> cards = new List<int>();
             for (int count1 = 1; count1 < 11; count1++)
             {
