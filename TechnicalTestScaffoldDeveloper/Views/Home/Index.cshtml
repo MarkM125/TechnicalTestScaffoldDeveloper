@@ -29,7 +29,7 @@
                     cardNumberRequired = "fith";
                     break;
                 case 5:
-                    
+                    //return_data_ajax();
                     return_data_jQuery();
 
                     break;
@@ -41,13 +41,29 @@
             $.post({
                 url: '../Home/Index',
                 data: { data: selectedCards },
-                dataType: 'text'
+                dataType: 'text',
+                success: function () {
+                }
             });
-        }
+        };
 
         function return_data_jQuery() {
-            $('#httpPost').data("data", {data: selectedCards}).submit();
-        }
+            var dataItem = JSON.stringify( {data : selectedCards });
+            //var dataItem = [];// = JSON.stringify("data[]=1&data[]=1&data[]=1&data[]=1&data[]=1");
+            //var input = $('#httpPostInput');
+            //for (var i = 0; i < selectedCards.count; i++)
+            //{
+            //    dataItem.push(JSON.stringify({ data: selectedCards[i] }));
+            //}
+            //alert(dataItem);
+            //input.val(dataItem);
+
+            $('#httpPostInput').val(dataItem);
+            //var stuff = ('#httpPostInput').attr("data");
+            //alert(stuff);
+            alert(JSON.stringify($('#httpPostInput').attr('value')));
+            $('#httpPost').submit();
+        };
 
     </script>
 </head>
@@ -71,7 +87,7 @@
         </div>
     }
 </div>
-<br>
+<br />
 <p>
     Rules:
     <ul>
@@ -84,6 +100,6 @@
 @Html.ActionLink("Numbers for zero score", "FindZeroScore", "Home")
 <br />
 @Html.ActionLink("Number of sets of cards which equal 15", "CountScoresThatEqualValues", "Home")
-<form id="httpPost" action="../Home/Index" type="hidden" method="post">
-    <input type="hidden" dataType="text" name="data" />
+<form id="httpPost" action="../Home/Index" method="post" enctype="application/x-www-form-urlencoded">
+    <input id="httpPostInput" type="hidden" dataType="text" name="data">
 </form> 
