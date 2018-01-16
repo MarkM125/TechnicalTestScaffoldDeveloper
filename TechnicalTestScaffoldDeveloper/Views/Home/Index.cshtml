@@ -3,14 +3,70 @@
     ViewData["Title"] = "Card game";
 }
 
-<h3>Choose your @Model.CardNumberRequired card</h3>
+<head>
+    <script type="text/javascript" src="~/js/jquery-3.2.1.js"></script>
+    <script>
+        var selectedCards = [];
+        var count = 0;
+        var cardNumberRequired;
+        $(function () {
+            $('#textPrompt').html('<h3>Choose your @Model.CardNumberRequired card</h3>');
+        });
+
+        function button_card(card) {
+            switch (selectedCards.push(card))
+            {
+                case 1:
+                    cardNumberRequired = "second";
+                    break;
+                case 2:
+                    cardNumberRequired = "third";
+                    break;
+                case 3:
+                    cardNumberRequired = "fourth";
+                    break;
+                case 4:
+                    cardNumberRequired = "fith";
+                    break;
+                case 5:
+                    
+                    return_data_jQuery();
+
+                    break;
+            }
+            $('#textPrompt').html('<h3>Choose your ' + cardNumberRequired + ' card</h3>')
+        };
+
+        function return_data_ajax() {
+            $.post({
+                url: '../Home/Index',
+                data: { data: selectedCards },
+                dataType: 'text'
+            });
+        }
+
+        function return_data_jQuery() {
+            $('#httpPost').data("data", {data: selectedCards}).submit();
+        }
+
+    </script>
+</head>
+
+
+<div id="textPrompt"><h3></h3></div>
+
 
 <div class="row">
     @foreach (var card in Model.CardButtons)
     {
         <div class="col-md-1">
             <h2>
-                @Html.ActionLink(card.ToString(), "Index", "Home", new { data = card }, null)
+               @*@Html.ActionLink(card.ToString(), "Index", "Home", new { data = card }, null)*@
+
+                <button onclick="button_card(@card.ToString())">
+                    @card.ToString()
+
+                </button>
             </h2>
         </div>
     }
@@ -28,3 +84,6 @@
 @Html.ActionLink("Numbers for zero score", "FindZeroScore", "Home")
 <br />
 @Html.ActionLink("Number of sets of cards which equal 15", "CountScoresThatEqualValues", "Home")
+<form id="httpPost" action="../Home/Index" type="hidden" method="post">
+    <input type="hidden" dataType="text" name="data" />
+</form> 

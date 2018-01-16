@@ -52,6 +52,13 @@ namespace TechnicalTestScaffoldDeveloper.Models
             return data;
         }
 
+        public static Models.CardsModel AddCard(Models.CardsModel data, List<int> cards)
+        {
+            data.Cards.AddRange(cards);
+            return data;
+        }
+
+
     }
 
 
