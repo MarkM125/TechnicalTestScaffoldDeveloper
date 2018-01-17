@@ -48,20 +48,10 @@
         };
 
         function return_data_jQuery() {
-            var dataItem = JSON.stringify( {data : selectedCards });
-            //var dataItem = [];// = JSON.stringify("data[]=1&data[]=1&data[]=1&data[]=1&data[]=1");
-            //var input = $('#httpPostInput');
-            //for (var i = 0; i < selectedCards.count; i++)
-            //{
-            //    dataItem.push(JSON.stringify({ data: selectedCards[i] }));
-            //}
-            //alert(dataItem);
-            //input.val(dataItem);
-
-            $('#httpPostInput').val(dataItem);
-            //var stuff = ('#httpPostInput').attr("data");
-            //alert(stuff);
-            alert(JSON.stringify($('#httpPostInput').attr('value')));
+            for (var i = 0; i < selectedCards.length; i++)
+            {
+                $('#httpPost').append('<input type="hidden" name="data[]" value="' + selectedCards[i] + '" />');
+            }
             $('#httpPost').submit();
         };
 
@@ -100,6 +90,4 @@
 @Html.ActionLink("Numbers for zero score", "FindZeroScore", "Home")
 <br />
 @Html.ActionLink("Number of sets of cards which equal 15", "CountScoresThatEqualValues", "Home")
-<form id="httpPost" action="../Home/Index" method="post" enctype="application/x-www-form-urlencoded">
-    <input id="httpPostInput" type="hidden" dataType="text" name="data">
-</form> 
+<form id="httpPost" action="../Home/Index" method="post" enctype="application/x-www-form-urlencoded"/>
